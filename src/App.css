@@ -1,33 +1,93 @@
-.App {
+body {
+  height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: #757575;
+}
+
+.root {
+  -webkit-perspective: 500px;
+          perspective: 500px;
+}
+.root:hover .card {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg);
+          transform: rotate3d(0, 1, 0, 180deg);
+}
+.root .card {
+  width: 500px;
+  height: 300px;
+  position: relative;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg);
+          transform: rotate3d(0, 1, 0, 0deg);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  transition: -webkit-transform .4s linear;
+  transition: transform .4s linear;
+  transition: transform .4s linear, -webkit-transform .4s linear;
+  text-transform: uppercase;
+  font-size: 14px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.root .card div {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.root .card .front {
+  position: absolute;
+  background: #313131;
+  z-index: 10;
+  -webkit-transform: translate3d(0, 0, 1px);
+          transform: translate3d(0, 0, 1px);
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.root .card .front h1 {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  border: 1px solid #FC7100;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: 14px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.root .card .back {
+  position: absolute;
+  background: #FC7100;
+  z-index: 10;
+  -webkit-transform: translate3d(0, 0, -1px) rotateY(180deg);
+          transform: translate3d(0, 0, -1px) rotateY(180deg);
+  padding: 10px;
+  color: #313131;
 }
-
-.App-link {
-  color: #61dafb;
+.root .card .back a {
+  color: #313131;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.root .card .back .name {
+  font-weight: bold;
+  font-size: 18px;
+}
+.root .card .back .subtitle {
+  color: #fff;
+  font-size: 14px;
+}
+.root .card .back .contacts {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: unset;
+  padding: 10px;
+}
+.root .card .back .contacts .contact-label {
+  font-weight: bold;
+  color: #fff;
+  display: inline-block;
+  width: 80px;
 }

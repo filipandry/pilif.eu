@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pilif Studio",
+  "name": "Pilif Studio - Filip Andrei Muresan",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "pilif_studio_orange.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
