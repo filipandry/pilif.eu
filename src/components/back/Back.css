@@ -1,0 +1,41 @@
+
+.back {
+    position: absolute;
+    background: #FC7100;
+    z-index: 10;
+    -webkit-transform: translate3d(0, 0, -1px) rotateY(180deg);
+            transform: translate3d(0, 0, -1px) rotateY(180deg);
+    padding: 10px;
+    color: #313131;
+  }
+  .back a {
+    color: #313131;
+    text-decoration: unset;
+  }
+  .back .name {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  .back .subtitle {
+    color: #fff;
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  .back .contacts {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: unset;
+    padding: 10px;
+  }
+  .back .contacts .contact {
+    margin: 0;
+  }
+  .back .contacts .contact-label {
+    font-weight: bold;
+    color: #fff;
+    display: inline-block;
+    width: 80px;
+  }
+  

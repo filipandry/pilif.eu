@@ -1,0 +1,30 @@
+
+.card {
+    -webkit-perspective: 500px;
+            perspective: 500px;
+  }
+.card:hover > .inner-card {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
+}
+.card > .inner-card {
+width: 500px;
+height: 300px;
+position: relative;
+-webkit-transform: rotate3d(0, 1, 0, 0deg);
+        transform: rotate3d(0, 1, 0, 0deg);
+-webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+transition: -webkit-transform .4s linear;
+transition: transform .4s linear;
+transition: transform .4s linear, -webkit-transform .4s linear;
+text-transform: uppercase;
+font-size: 14px;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.card > .inner-card > div {
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+}
