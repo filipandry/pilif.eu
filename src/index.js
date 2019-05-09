@@ -7,8 +7,13 @@ import * as serviceWorker from './serviceWorker';
 import color from 'color';
 import {ThemeProvider} from 'react-jss'
 
+import Firebase, { FirebaseContext } from 'components/firebase';
+
 const colorPrimary="#FF7900";
 const colorSecondary="#313131";
+
+
+
 
 const theme = {
     colorPrimary:colorPrimary,
@@ -22,7 +27,11 @@ const theme = {
   };
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}><App /></ThemeProvider>, 
+    <FirebaseContext.Provider value={new Firebase()}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </FirebaseContext.Provider>, 
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

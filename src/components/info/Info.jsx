@@ -66,9 +66,9 @@ class Info extends Component {
                     );
                 })}
                 {currentItem && <div className={classes.current}>
-                    <span class={classes.beforeContent}></span>
+                    <span className={classes.beforeContent}></span>
                     {currentItem.content}
-                    <span class={classes.afterContent}></span>
+                    <span className={classes.afterContent}></span>
                 </div>}
             </div>
         );

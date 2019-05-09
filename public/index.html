@@ -22,6 +22,26 @@
     <title>WEBSITE</title>
   </head>
   <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCn3o8KVOL1DowsqQW2XVKQv25oinazWNQ",
+      authDomain: "pilifeu.firebaseapp.com",
+      databaseURL: "https://pilifeu.firebaseio.com",
+      projectId: "pilifeu",
+      storageBucket: "pilifeu.appspot.com",
+      messagingSenderId: "693749888078",
+      appId: "1:693749888078:web:68d74c92c7024d61"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

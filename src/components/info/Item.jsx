@@ -61,7 +61,6 @@ class Item extends Component {
     }
     render() {
         var {classes,data, onClick, isSelected} = this.props;
-        console.log(classes);
         var itemClasses = classes.item;
         var boxClasses = classes.box;
         if(isSelected){

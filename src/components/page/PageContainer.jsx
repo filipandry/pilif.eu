@@ -14,7 +14,6 @@ export default class PageContainer extends Component {
         document.addEventListener('touchend',this.onTouchEnd, passive);
         document.addEventListener('touchmove',this.onTouchMove, passive);
         document.addEventListener('wheel',this.onWeel, passive);
-        console.log(document.cookie);
         var page = this.getCookie("page");
         if(page){
             this.scroll(parseInt(page));
