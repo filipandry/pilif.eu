@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import 'components/back/Back.css'
+import 'components/card/back/Back.css'
 
 export default class Back extends Component {
     render() {

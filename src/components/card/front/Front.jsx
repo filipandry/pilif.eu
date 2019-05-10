@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import 'components/front/Front.css'
+import 'components/card/front/Front.css'
 
 export default class Front extends Component {
     render() {

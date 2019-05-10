@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Front from 'components/front/Front';
-import Back from 'components/back/Back';
+import Front from 'components/card/front/Front';
+import Back from 'components/card/back/Back';
 import 'components/card/Card.css';
 
 export default class Card extends Component {

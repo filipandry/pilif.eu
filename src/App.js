@@ -15,6 +15,7 @@ import Login from 'components/auth/Login';
 import withAuthentication from './components/auth/session/withAuthentications';
 import SignOut from './components/auth/SignOut';
 import PortfolioEdit from './components/portfolio/PortfolioEdit';
+import Card1 from './components/profile/card1/Card1';
 
 
 const styles = theme => ({
@@ -24,7 +25,14 @@ const styles = theme => ({
     },
     "*": {
       boxSizing: "border-box",
-    }
+    },
+    a: {
+      textDecoration: "none",
+      color: theme.colorSecondary,
+      "&:visited":{
+        color: theme.colorSecondary,
+      }
+    },
   },
   root: {
     width: "100%",
@@ -67,91 +75,7 @@ class App extends Component {
 
   render() {
     var {theme,classes, user } = this.props;
-    var { groups, games, websites,designs, other} = this.state;
-    // var games = [
-    //   {
-    //     id: 1,
-    //     title: "Mouth catcher",
-    //     image: "https://picsum.photos/500/300?random=1",
-    //   },
-    //   {
-    //     id: 2,
-    //     title: "Briscola",
-    //     image: "https://picsum.photos/500/300?random=2",
-    //   },
-    //   {
-    //     id: 3,
-    //     title: "Bulineer",
-    //     image: "https://picsum.photos/500/300?random=3",
-    //   },
-    //   {
-    //     id: 4,
-    //     title: "Fruit battle",
-    //     image: "https://picsum.photos/500/300?random=4",
-    //   },
-    //   {
-    //     id: 9,
-    //     title: "TBD",
-    //     image: "https://picsum.photos/500/300?random=9",
-    //   },
-    //   {
-    //     id: 10,
-    //     title: "TBD",
-    //     image: "https://picsum.photos/500/300?random=10",
-    //   },
-    //   {
-    //     id: 11,
-    //     title: "TBD",
-    //     image: "https://picsum.photos/500/300?random=11",
-    //   },
-    //   {
-    //     id: 12,
-    //     title: "TBD",
-    //     image: "https://picsum.photos/500/300?random=12",
-    //   },
-    // ];
-    // var websites = [
-    //   {
-    //     id: 5,
-    //     title: "pilif.eu",
-    //     image: "https://picsum.photos/500/300?random=5",
-    //   },
-    //   {
-    //     id: 6,
-    //     title: "pisilapisigratuit.eu",
-    //     image: "https://picsum.photos/500/300?random=6",
-    //   },
-    // ];
-    // var designs = [
-    //   {
-    //     id: 7,
-    //     title: "Pilif logo",
-    //     image: "https://picsum.photos/500/300?random=7",
-    //   },
-    // ];
-    // var other = [];
-    // var infos = [
-    //   {
-    //     id: 1,
-    //     title: "Games",
-    //     content: <Portfolio items={games} />,
-    //   },
-    //   {
-    //     id: 2,
-    //     title: "Websites",
-    //     content: <Portfolio items={websites} />,
-    //   },
-    //   {
-    //     id: 3,
-    //     title: "Designs",
-    //     content: <Portfolio items={designs} />,
-    //   },
-    //   {
-    //     id: 4,
-    //     title: "Other",
-    //     content: <Portfolio items={other} />,
-    //   },
-    // ];
+    var { groups} = this.state;
     var infos = groups.map(item => ({
       id: item.id,
       title: item.title,
@@ -166,15 +90,16 @@ class App extends Component {
             <Page color={theme.colorPrimary}>
               <Info data={infos}/>
             </Page>
-            <Page color={theme.colorSecondaryLighter}>
+            <Page color={theme.colorSecondaryLighter} style={{display:"flex"}}>
+              <Card1 />
             </Page>
             <Page color={theme.colorPrimary}>
               {!user && <Login />}
               {!user && <Register />}
               {user && <SignOut/>}
+              {user && <PortfolioEdit />}
             </Page>
             <Page color={theme.colorSecondaryLighter}>
-              <PortfolioEdit />
             </Page>
           </PageContainer>
         </div>
@@ -182,7 +107,6 @@ class App extends Component {
   }
 }
 
-//export default injectSheet(styles)(withFirebase(withAuthentication(App)));
 const composer = compose(
   injectSheet(styles),
   withFirebase,
