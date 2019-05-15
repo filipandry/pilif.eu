@@ -14,6 +14,8 @@ export default class PageContainer extends Component {
         document.addEventListener('touchend',this.onTouchEnd, passive);
         document.addEventListener('touchmove',this.onTouchMove, passive);
         document.addEventListener('wheel',this.onWeel, passive);
+        window.addEventListener('resize',this.onResize);
+        this.onResize();
         var page = this.getCookie("page");
         if(page){
             this.scroll(parseInt(page));
@@ -40,7 +42,11 @@ export default class PageContainer extends Component {
         }
         return "";
       }
-
+      onResize = () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh',`${vh}px`);
+        this.scroll(this.state.page);
+      }
     onTouchStart = (event) =>{
         this.setState({touchY: event.touches[0].screenY, isTouching: true});
     }
@@ -48,7 +54,6 @@ export default class PageContainer extends Component {
         this.setState({touchY: 0, isTouching: false});
     }
     onTouchMove = (event) =>{
-        console.log(event);
         event.preventDefault();
         event.returnValue = false;
         var {isTouching, isScrolling, touchY, page} = this.state;
@@ -62,15 +67,16 @@ export default class PageContainer extends Component {
         }
   
         var delta = event.touches[0].screenY - touchY;
-        if(delta === 0){
+        if(delta <= 100 && delta >= -100){
             return;
         }
         touchY = event.touches[0].screenY;
-        this.setState({isScrolling: true},() => {
-            if(delta > 0){
+        this.setState({isScrolling: true, isTouching: false},() => {
+            console.log(delta);
+            if(delta > 100){
                 page--;
             }
-            else if (delta < 0) {
+            else if (delta < -100) {
                 page++;
             }
             

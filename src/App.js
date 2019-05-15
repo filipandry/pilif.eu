@@ -10,6 +10,12 @@ import { FirebaseContext, withFirebase } from 'components/firebase';
 import injectSheet from 'react-jss';
 import {compose} from 'recompose';
 
+
+import LinkedIn from 'mdi-react/LinkedinIcon';
+import GitHub from 'mdi-react/GithubFaceIcon';
+import Codepen from 'mdi-react/CodepenIcon';
+import Email from 'mdi-react/EmailOutlineIcon';
+
 import PageContainer from 'components/page/PageContainer';
 import Login from 'components/auth/Login';
 import withAuthentication from './components/auth/session/withAuthentications';
@@ -61,10 +67,6 @@ class App extends Component {
           for(var key in groups){
             groups[key].items = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===groups[key].id);
           }
-          // state.games = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===1);
-          // state.websites = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===2);
-          // state.designs = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===3);
-          // state.other = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===4);
           state.groups = groups;
           return state;
         });
@@ -81,17 +83,49 @@ class App extends Component {
       title: item.title,
       content: <Portfolio items={item.items} />
     }));
+
+    var cardInfos= {
+      name: 'Filip Andrei Muresan',
+      title: 'Full stack developer',
+      profilePicture: 'https://picsum.photos/id/565/100/100',
+      contacts: [
+          {
+              label: "LinkedIn",
+              icon: <LinkedIn />,
+              link: 'https://linkedin.com/in/filip-andrei-muresan/',
+              text: 'Visit my profile'
+          },
+          {
+            label: "GitHub",
+              icon: <GitHub />,
+              link: 'https://github.com/filipandry',
+              text: 'filipandry'
+          },
+          {
+            label: "Codepen",
+              icon: <Codepen />,
+              link: 'https://codepen.io/filip_andry/',
+              text: '@filip_andry',
+          },
+          {
+            label: "Email",
+              icon: <Email />,
+              link: 'mailto:info@pilif.eu',
+              text: 'info@pilif.eu'
+          },
+      ]
+    };
     return (
         <div className={classes.root}>
           <PageContainer>
             <Page color={theme.colorSecondaryLighter}>
-              <Card name="title" linkedin="linkedin" email="mail@mail.com" website="example.com" job="subtitle"/>
+              <Card {...cardInfos}/>
             </Page>
             <Page color={theme.colorPrimary}>
               <Info data={infos}/>
             </Page>
             <Page color={theme.colorSecondaryLighter} style={{display:"flex"}}>
-              <Card1 />
+              <Card1 {...cardInfos} />
             </Page>
             <Page color={theme.colorPrimary}>
               {!user && <Login />}
