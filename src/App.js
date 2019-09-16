@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Page from 'components/page/Page';
 import Card from 'components/card/Card';
 import Info from 'components/info/Info';
-import Portfolio from 'components/portfolio/Portfolio';
 import Register from 'components/auth/Register';
 
 import { FirebaseContext, withFirebase } from 'components/firebase';
@@ -45,7 +44,24 @@ const styles = theme => ({
     height: "100%",
   }
 });
-
+const compare = (item1,item2) =>{
+  if(item1.id < item2.id){
+    return -1;
+  }
+  if(item1.id > item2.id){
+    return 1;
+  }
+  return 0;
+}
+const compareDesc = (item2,item1) =>{
+  if(item1.id < item2.id){
+    return -1;
+  }
+  if(item1.id > item2.id){
+    return 1;
+  }
+  return 0;
+}
 class App extends Component {
   state = {
     groups: [],
@@ -59,14 +75,16 @@ class App extends Component {
     var {firebase} = this.props;
     
     firebase.db.ref('/portfolio').on('value',snapshot =>{
-      console.log(snapshot.val());
+      var items = Array.from(snapshot.val()).sort(compareDesc);
+      console.log(items);
       firebase.db.ref('/groups').on('value', groupSnap =>{
         var groups = Array.from(groupSnap.val()).filter(i => i!== undefined);
         console.log(groups);
         this.setState(state =>{
-          for(var key in groups){
-            groups[key].items = Array.from(snapshot.val()).filter(i => i !== undefined && i.group===groups[key].id);
-          }
+          groups = groups.map(item =>{
+            item.items = items.filter(i => i !== undefined && i.group===item.id);
+            return item;
+          });
           state.groups = groups;
           return state;
         });
@@ -78,11 +96,12 @@ class App extends Component {
   render() {
     var {theme,classes, user } = this.props;
     var { groups} = this.state;
-    var infos = groups.map(item => ({
-      id: item.id,
-      title: item.title,
-      content: <Portfolio items={item.items} />
-    }));
+    // var infos = groups.map(item => ({
+    //   id: item.id,
+    //   title: item.title,
+    //   content: <Portfolio items={item.items} />,
+    //   showMore: item.showMore
+    // }));
 
     var cardInfos= {
       name: 'Filip Andrei Muresan',
@@ -122,7 +141,7 @@ class App extends Component {
               <Card {...cardInfos}/>
             </Page>
             <Page color={theme.colorPrimary}>
-              <Info data={infos}/>
+              <Info data={groups}/>
             </Page>
             <Page color={theme.colorSecondaryLighter} style={{display:"flex"}}>
               <Card1 {...cardInfos} />

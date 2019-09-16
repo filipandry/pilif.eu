@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss'
 
+import Portfolio from 'components/portfolio/Portfolio';
 import Item from "components/info/Item";
+import Button from "components/button/Button";
+import Pagination from '../pagination/Pagination';
 
 const styles = theme => ({
     root: {
@@ -37,10 +40,11 @@ class Info extends Component {
     constructor(props){
         super(props);
         this.Container = React.createRef();
-    }
-    state={
-        width:0,
-        currentItem:false,
+        this.state={
+            width:0,
+            currentItem:false,
+            page: 1
+        }
     }
     componentDidMount() {
         if(this.Container.current){
@@ -50,11 +54,14 @@ class Info extends Component {
     }
     onItemClick = (item) =>() =>{
         console.log(item);
-        this.setState({currentItem: item});
+        this.setState({currentItem: item, page:1});
+    }
+    onPageChange = (newPage, oldPage) =>{
+        this.setState({page: newPage});
     }
     render() {
         var {classes,data} = this.props;
-        var {width, currentItem} = this.state;
+        var {width, currentItem, page} = this.state;
         if(!currentItem && data && data.length > 0){
             currentItem = data[0];
         }
@@ -67,9 +74,10 @@ class Info extends Component {
                 })}
                 {currentItem && <div className={classes.current}>
                     <span className={classes.beforeContent}></span>
-                    {currentItem.content}
+                    <Portfolio items={currentItem.items.slice((page-1) * 4,(page-1) * 4 + 4)} />
                     <span className={classes.afterContent}></span>
                 </div>}
+                {currentItem && currentItem.items.length > 4 && <Pagination count={Math.ceil(currentItem.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
             </div>
         );
     }
