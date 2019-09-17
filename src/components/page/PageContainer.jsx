@@ -147,11 +147,19 @@ export default class PageContainer extends Component {
         if(this.props.children){
             if(Array.isArray(this.props.children)){
                 pages = this.props.children.length;
+                var delta = 0;
+                for(var i=0;i< pages;i++){
+                    if(Array.isArray(this.props.children[i])){
+                        delta += this.props.children[i].length -1;
+                    }
+                }
+                pages += delta;
             }
             else{
                 pages = 1;
             }
         }
+        console.log(pages);
         return pages;
     }
     render() {

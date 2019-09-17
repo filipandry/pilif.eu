@@ -1,167 +1,31 @@
 import React, {Component} from 'react';
-import Page from 'components/page/Page';
-import Card from 'components/card/Card';
-import Info from 'components/info/Info';
-import Register from 'components/auth/Register';
-
-import { FirebaseContext, withFirebase } from 'components/firebase';
-
-import injectSheet from 'react-jss';
 import {compose} from 'recompose';
+import withAuthentication from 'components/auth/session/withAuthentications';
+import { withFirebase } from 'components/firebase';
 
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from 'pages/Home';
+import Backend from 'pages/Backend';
+import PageNotFound from 'pages/PageNotFound';
 
-import LinkedIn from 'mdi-react/LinkedinIcon';
-import GitHub from 'mdi-react/GithubFaceIcon';
-import Codepen from 'mdi-react/CodepenIcon';
-import Email from 'mdi-react/EmailOutlineIcon';
-
-import PageContainer from 'components/page/PageContainer';
-import Login from 'components/auth/Login';
-import withAuthentication from './components/auth/session/withAuthentications';
-import SignOut from './components/auth/SignOut';
-import PortfolioEdit from './components/portfolio/PortfolioEdit';
-import Card1 from './components/profile/card1/Card1';
-
-
-const styles = theme => ({
-  "@global": {
-    body: {
-      overflow: "hidden",
-    },
-    "*": {
-      boxSizing: "border-box",
-    },
-    a: {
-      textDecoration: "none",
-      color: theme.colorSecondary,
-      "&:visited":{
-        color: theme.colorSecondary,
-      }
-    },
-  },
-  root: {
-    width: "100%",
-    height: "100%",
-  }
-});
-const compare = (item1,item2) =>{
-  if(item1.id < item2.id){
-    return -1;
-  }
-  if(item1.id > item2.id){
-    return 1;
-  }
-  return 0;
-}
-const compareDesc = (item2,item1) =>{
-  if(item1.id < item2.id){
-    return -1;
-  }
-  if(item1.id > item2.id){
-    return 1;
-  }
-  return 0;
-}
 class App extends Component {
-  state = {
-    groups: [],
-    games:[],
-    websites:[],
-    designs:[],
-    other:[],
-  }
-
-  componentDidMount(){
-    var {firebase} = this.props;
-    
-    firebase.db.ref('/portfolio').on('value',snapshot =>{
-      var items = Array.from(snapshot.val()).sort(compareDesc);
-      console.log(items);
-      firebase.db.ref('/groups').on('value', groupSnap =>{
-        var groups = Array.from(groupSnap.val()).filter(i => i!== undefined);
-        console.log(groups);
-        this.setState(state =>{
-          groups = groups.map(item =>{
-            item.items = items.filter(i => i !== undefined && i.group===item.id);
-            return item;
-          });
-          state.groups = groups;
-          return state;
-        });
-      });
-      
-    });
-  }
 
   render() {
-    var {theme,classes, user } = this.props;
-    var { groups} = this.state;
-    // var infos = groups.map(item => ({
-    //   id: item.id,
-    //   title: item.title,
-    //   content: <Portfolio items={item.items} />,
-    //   showMore: item.showMore
-    // }));
-
-    var cardInfos= {
-      name: 'Filip Andrei Muresan',
-      title: 'Full stack developer',
-      profilePicture: 'https://picsum.photos/id/565/100/100',
-      contacts: [
-          {
-              label: "LinkedIn",
-              icon: <LinkedIn />,
-              link: 'https://linkedin.com/in/filip-andrei-muresan/',
-              text: 'Visit my profile'
-          },
-          {
-            label: "GitHub",
-              icon: <GitHub />,
-              link: 'https://github.com/filipandry',
-              text: 'filipandry'
-          },
-          {
-            label: "Codepen",
-              icon: <Codepen />,
-              link: 'https://codepen.io/filip_andry/',
-              text: '@filip_andry',
-          },
-          {
-            label: "Email",
-              icon: <Email />,
-              link: 'mailto:info@pilif.eu',
-              text: 'info@pilif.eu'
-          },
-      ]
-    };
+    var { user } = this.props;
+    
     return (
-        <div className={classes.root}>
-          <PageContainer>
-            <Page color={theme.colorSecondaryLighter}>
-              <Card {...cardInfos}/>
-            </Page>
-            <Page color={theme.colorPrimary}>
-              <Info data={groups}/>
-            </Page>
-            <Page color={theme.colorSecondaryLighter} style={{display:"flex"}}>
-              <Card1 {...cardInfos} />
-            </Page>
-            <Page color={theme.colorPrimary}>
-              {!user && <Login />}
-              {!user && <Register />}
-              {user && <SignOut/>}
-              {user && <PortfolioEdit />}
-            </Page>
-            <Page color={theme.colorSecondaryLighter}>
-            </Page>
-          </PageContainer>
-        </div>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/backend" component={Backend} />
+          <Route exact component={PageNotFound} />
+        </Switch>
+    </Router>
     );
   }
 }
 
 const composer = compose(
-  injectSheet(styles),
   withFirebase,
   withAuthentication
 );

@@ -7,34 +7,23 @@ import color from 'color';
 const styles = theme => ({
     item: {
         position: "relative",
-        display: "inline-block",
+        display: "block",
         verticalAlign: "top",
-        width: "25%",
+        width: 150,
         margin: "auto",
         perspective: props => props.width,
     },
     box: {
         position: "relative",
-        width: props => props.width / 2,
-        height: props => props.width / 2,
+        width: 150,
+        height: 30,
         border: "1px solid " + theme.colorSecondary,
-        borderRadius: "50%",
-        //left: "50%",
-        //transform: "translateX(-50%)",
         marginLeft: "auto",
         marginRight: "auto",
         background: theme.colorSecondary,
         color: theme.colorPrimary,
-        cursor: "pointer",
         transition: "transform .4s linear",
         transformStyle: "preserve-3d",
-        "&:hover": {
-            background: theme.colorSecondaryLighter,
-        }
-    },
-    boxSelected: {
-        background: theme.colorSecondaryDarker,
-        transform: "rotateY(360deg)",
     },
     title: {
         position: "relative",

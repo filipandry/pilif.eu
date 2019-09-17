@@ -3,8 +3,8 @@
     position: absolute;
     background: #FC7100;
     z-index: 10;
-    -webkit-transform: translate3d(0, 0, -1px) rotateY(180deg);
-            transform: translate3d(0, 0, -1px) rotateY(180deg);
+    -webkit-transform: translate3d(0, 0, 0px) rotateY(180deg);
+            transform: translate3d(0, 0, 0px) rotateY(180deg);
     padding: 10px;
     color: #313131;
   }

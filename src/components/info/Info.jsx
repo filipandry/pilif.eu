@@ -41,43 +41,27 @@ class Info extends Component {
         super(props);
         this.Container = React.createRef();
         this.state={
-            width:0,
-            currentItem:false,
             page: 1
         }
-    }
-    componentDidMount() {
-        if(this.Container.current){
-            //console.log(this.Container.current);
-            this.setState({width:this.Container.current.clientWidth});
-        }
-    }
-    onItemClick = (item) =>() =>{
-        console.log(item);
-        this.setState({currentItem: item, page:1});
     }
     onPageChange = (newPage, oldPage) =>{
         this.setState({page: newPage});
     }
     render() {
-        var {classes,data} = this.props;
-        var {width, currentItem, page} = this.state;
-        if(!currentItem && data && data.length > 0){
-            currentItem = data[0];
-        }
+        var {classes,item} = this.props;
+        var {page} = this.state;
+        
         return (
             <div className={classes.root} ref={this.Container}>
-                {data.map((item, index) =>{
-                    return (
-                        <Item key={index}width={width/4} data={item} onClick={this.onItemClick(item)} isSelected={currentItem && currentItem.id === item.id}/>
-                    );
-                })}
-                {currentItem && <div className={classes.current}>
+                
+                <Item data={item} />
+                
+                <div className={classes.current}>
                     <span className={classes.beforeContent}></span>
-                    <Portfolio items={currentItem.items.slice((page-1) * 4,(page-1) * 4 + 4)} />
+                    <Portfolio items={item.items.slice((page-1) * 4,(page-1) * 4 + 4)} />
                     <span className={classes.afterContent}></span>
-                </div>}
-                {currentItem && currentItem.items.length > 4 && <Pagination count={Math.ceil(currentItem.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
+                </div>
+                {item.items.length > 4 && <Pagination count={Math.ceil(item.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
             </div>
         );
     }

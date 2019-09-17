@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss'
 import Button from '../button/Button';
+import ExpandingPanel from '../expandingPanel/ExpandingPanel';
 
 const styles = theme => ({
     root: {
@@ -31,14 +32,47 @@ const styles = theme => ({
     },
     content: {
         padding: "10px",
+        '& > p':{
+            minHeight: 150,
+            maxHeight: 150,
+        }
+    },
+    panel: {
+        position: 'absolute',
+        background: theme.colorSecondary,
+        border: `1px solid ${theme.colorPrimary}`
     }
 });
 
 
 class PortfolioItem extends Component {
+    constructor(props){
+        super(props);
+        this.button = React.createRef();
+        this.state = {
+            pos: false,
+        }
+    }
+    onMoreClick = () =>{
+        var bounds = this.button.current.getBounds();
+        console.log(bounds);
+        this.setState({pos: bounds});
+    }
+    onDetailsClose = () =>{
+        this.setState({pos: false});
+    }
     render() {
-        var {classes, item} = this.props;
-        console.log(item);
+        var { classes, item } = this.props;
+        var { pos } = this.state;
+        var style = pos && {
+            top: pos.top,
+            left: pos.left,
+            width: pos.width,
+            height: pos.height,
+            widthEnd: window.innerWidth * 90 / 100,
+            heightEnd: window.innerHeight * 90 / 100,
+        };
+        var { ...exp } = style;
         return (
             <div className={classes.root}>
                 <div className={classes.inner}>
@@ -46,9 +80,10 @@ class PortfolioItem extends Component {
                     <div className={classes.content}>
                         <span className={classes.title}>{item.title}</span>
                         <p>{item.text}</p>
-                        <Button label="More..." fullWidth />
+                        <Button innerRef={this.button} label="More..." fullWidth onClick={this.onMoreClick} marginTop={40}/>
                     </div>
                 </div>
+                {pos && <ExpandingPanel {...exp} onClose={this.onDetailsClose} data={item}/>}
             </div>
         );
     }
