@@ -122,7 +122,7 @@ class Home extends Component {
               console.log(item);
               return (
                 <Page key={index} color={index % 2 !== 1 ? theme.colorPrimary : theme.colorSecondaryLighter}>
-                  <Info item={item} />
+                  <Info item={item} color={index % 2 !== 0 ? theme.colorPrimary : theme.colorSecondaryLighter} color2={index % 2 !== 1 ? theme.colorPrimary : theme.colorSecondaryLighter}/>
                 </Page>
               );})}
             <Page color={theme.colorSecondaryLighter} style={{display:"flex"}}>

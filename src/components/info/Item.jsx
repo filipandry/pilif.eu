@@ -1,34 +1,41 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss'
+import classNames from 'classnames';
 
 const styles = theme => ({
     item: {
-        position: "relative",
+        position: "absolute",
         display: "block",
         verticalAlign: "top",
-        width: 150,
+        width: "100%",
         margin: "auto",
         perspective: props => props.width,
+        top: "3.7vh",
     },
     box: {
         position: "relative",
-        width: 150,
-        height: 30,
-        border: "1px solid " + theme.colorSecondary,
+        width: "100%",
+        height: 60,
         marginLeft: "auto",
         marginRight: "auto",
-        background: theme.colorSecondary,
-        color: theme.colorPrimary,
-        transition: "transform .4s linear",
-        transformStyle: "preserve-3d",
+        color: props => props.color,
+        textAlign:'center',
     },
     title: {
-        position: "relative",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%,-50%)",
-        display: "block",
+        position: "absolute",
         width: "fit-content",
+        fontSize: 60,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        left: "50%",
+        transform: "translateX(-50%)",
+        userSelect: 'none',
+    },
+    title1:{
+        color: props => props.color,
+    },
+    title2:{
+        color: props => props.color,
     }
 });
 
@@ -55,9 +62,8 @@ class Item extends Component {
         return (
             <div className={itemClasses}>
                 <div className={boxClasses} onClick={onClick}>
-                    <span className={classes.title}>
-                        {data.title}
-                    </span>
+                    <span className={classNames(classes.title,classes.title1)}>{data.title}</span>
+                    {/* <span className={classNames(classes.title,classes.title2)}>{data.title}</span> */}
                 </div>
             </div>
         );

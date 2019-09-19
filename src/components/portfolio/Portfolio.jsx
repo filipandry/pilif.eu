@@ -4,6 +4,7 @@ import PortfolioItem from 'components/portfolio/PortfolioItem';
 
 const styles = theme => ({
     root: {
+        textAlign: 'center',
     },
 });
 

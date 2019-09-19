@@ -16,6 +16,11 @@ const styles = theme => ({
     },
     current: {
         padding: "50px 0",
+        position: "absolute",
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        width: '100%',
     },
     beforeContent: {
         position: "relative",
@@ -23,7 +28,7 @@ const styles = theme => ({
         display: "block",
         width: "50px",
         height: "2px",
-        background: theme.colorSecondary
+        background: props => props.color2,
     },
     afterContent: {
         position: "relative",
@@ -31,7 +36,18 @@ const styles = theme => ({
         display: "block",
         width: "50px",
         height: "2px",
-        background: theme.colorSecondary
+        background: props => props.color2,
+    },
+    back: {
+        position: 'absolute',
+        width: '55vw',
+        height: '80vh',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        background: props => props.color,
+        borderRadius: 20,
+        boxShadow: '0 0 10px rgba(0,0,0,0.6)',
     }
 });
 
@@ -47,20 +63,19 @@ class Info extends Component {
         this.setState({page: newPage});
     }
     render() {
-        var {classes,item} = this.props;
+        var {classes,item, color, color2} = this.props;
         var {page} = this.state;
         
         return (
             <div className={classes.root} ref={this.Container}>
-                
-                <Item data={item} />
-                
+                <div className={classes.back} />
+                <Item data={item} color={color} color2={color2} />
                 <div className={classes.current}>
                     <span className={classes.beforeContent}></span>
                     <Portfolio items={item.items.slice((page-1) * 4,(page-1) * 4 + 4)} />
                     <span className={classes.afterContent}></span>
+                    {item.items.length > 4 && <Pagination count={Math.ceil(item.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
                 </div>
-                {item.items.length > 4 && <Pagination count={Math.ceil(item.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
             </div>
         );
     }
