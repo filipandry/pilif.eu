@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from 'pages/Home';
 import Backend from 'pages/Backend';
 import PageNotFound from 'pages/PageNotFound';
+import BlogPost from './components/blog/BlogPost';
 
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/backend" component={Backend} />
+          <Route path="/blog" component={BlogPost} />
           <Route exact component={PageNotFound} />
         </Switch>
     </Router>
