@@ -1,49 +1,16 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {compose} from 'recompose';
 import injectSheet from 'react-jss'
 import withAuthentication from 'components/auth/session/withAuthentications';
 import { withFirebase } from 'components/firebase';
 import GroupViewer from './GroupViewer';
-import color from 'color';
 
 import { Link } from "react-router-dom";
+import Table from '../../components/table/Table';
 
 const styles = theme => ({
     root: {
         padding: 25,
-    },
-    headerRow:{
-        padding: 10,
-        width: '100%',
-        background: theme.colorSecondary,
-        color: theme.fontColorSecondary,
-        '&> span':{
-            display: 'inline-block',
-            width: 150,
-            overflow: 'hidden',
-        }
-    },
-    row:{
-        padding: 10,
-        width: '100%',
-        overflow: 'hidden',
-        background: color(theme.colorPrimaryLighter).lighten(0.2).hsl().string(),
-        color: theme.fontColorPrimary,
-        maxHeight: 40,
-        '&:nth-child(odd)':{
-            background: color(theme.colorPrimaryLighter).lighten(0.25).hsl().string(),
-            color: theme.fontColorPrimary,
-        },
-        '&:hover':{
-            background: color(theme.colorPrimaryLighter).lighten(0.1).hsl().string(),
-        },
-        '&> span':{
-            padding: '0 5px',
-            display: 'inline-block',
-            width: 150,
-            overflow: 'hidden',
-            verticalAlign: 'top',
-        }
     },
     action: {
         textDecoration: 'none',
@@ -82,29 +49,46 @@ class Projects extends Component {
     var { classes } = this.props;
     var { items } = this.state;
     console.log(items);
+    var columns = [
+        {
+            key:'id',
+            label:'ID',
+            width: 100,
+        },
+        {
+            key:'title',
+            label:'Title',
+            width: 200,
+        },
+        {
+            key:'text',
+            label:'Text',
+            width: 400,
+        },
+        {
+            key:'group',
+            label:'Group',
+            width: 100,
+            customContent: (row) => (<GroupViewer id={row.group} />)
+        },
+        {
+            key:'actions',
+            label:<Link to={`/backend/project/`}>New project</Link>,
+            width: 200,
+            float: 'right',
+            customContent: (row) => {
+                return (
+                    <Fragment>
+                        <Link to={`/backend/project/${row.id}`}>Edit</Link>
+                        <span className={classes.action} onClick={this.deleteItem(row.id)}>Delete</span>
+                    </Fragment>
+                );
+            }
+        },
+    ];
     return (
         <div className={classes.root}>
-            <div className={classes.headerRow}>
-                <span>ID</span>
-                <span>Title</span>
-                <span>Text</span>
-                <span>Group</span>
-                <span>
-                    <Link to={`/backend/project/`}>New project</Link>
-                </span>
-            </div>
-            {items.map((item, index) => (
-                <div key={index} className={classes.row}>
-                    <span>{item.id}</span>
-                    <span>{item.title}</span>
-                    <span>{item.text}</span>
-                    <span><GroupViewer id={item.group} /></span>
-                    <span>
-                        <Link to={`/backend/project/${item.id}`}>Edit</Link>
-                        <span className={classes.action} onClick={this.deleteItem(item.id)}>Delete</span>
-                    </span>
-                </div>
-            ))}
+            <Table columns={columns} data={items} />
         </div>
     );
   }

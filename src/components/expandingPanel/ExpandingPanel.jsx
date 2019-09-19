@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import injectSheet from 'react-jss';
 import classNames from 'classnames';
+import Pagination from '../pagination/Pagination';
 
 const styles = theme => ({
     root: {
@@ -57,12 +58,14 @@ const styles = theme => ({
     },
     mainImage:{
         width: "100%",
-        paddingTop: "56.25%",
+        //paddingTop: "56.25%",
         background: theme.colorPrimary,
+        height: props => props.heightEnd * 0.7
     },
     thumbnails:{
         fontSize:0,
         paddingTop: 10,
+        height: props => props.heightEnd * 0.3
     },
     thumbnail:{
         width: "calc(25% - 10px)",
@@ -72,6 +75,10 @@ const styles = theme => ({
         paddingTop: "14.0625%",
         background: theme.colorPrimary,
         cursor: 'pointer',
+    },
+    thumbailActive:{
+        border: `2px solid ${theme.colorPrimary}`,
+        paddingTop: 'calc(14.0625% - 4px)'
     }
 });
 
@@ -81,6 +88,8 @@ class ExpandigPanel extends Component {
         this.container = React.createRef();
         this.state = {
             start: false,
+            imageid: false,
+            thumbnailsPage: 1,
         };
     }
     componentDidMount() {
@@ -105,21 +114,45 @@ class ExpandigPanel extends Component {
            this.doClose();
         }
     }
+    thumbnailClick = (id) => ()  =>{
+        this.setState({imageid:id});
+    }
+    thumbnailsPageChange = (page) =>{
+        this.setState({thumbnailsPage: page});
+    }
     render() {
         var { classes, data } = this.props;
-        var { start } = this.state;
+        var { start,imageid,thumbnailsPage } = this.state;
+
+        var mainImage = false;
+        
+        var allImages = data.images.filter(f => f!== undefined);
+        if(imageid){
+            mainImage = data.images[imageid].image;
+        }
+        else {
+            if(data.images && data.images.length > 0){
+                mainImage = allImages[0].image;
+                imageid = allImages[0].id;
+            }
+        }
+        var startT = (thumbnailsPage-1)*4;
+        var endT = startT + 4;
+        var images = !!data.images ? allImages.slice(startT,endT) : [];
+
+        console.log(allImages);
+
         return ReactDOM.createPortal(
             <div ref={this.container} className={classNames(classes.root,{ [classes.rootBefore]: !start, [classes.rootAfter]: start })}>
                 <div className={classes.left}>
                     <div className={classes.gallery}>
-                        <div className={classes.mainImage} style={{background: `url(${data.image}) center/cover no-repeat`}}>
+                        <div className={classes.mainImage} style={{background: `url(${mainImage}) center/cover no-repeat`}}>
 
                         </div>
                         <div className={classes.thumbnails}>
-                            <div className={classes.thumbnail} style={{background: `url(${data.image}) center/cover no-repeat`}}></div>
-                            <div className={classes.thumbnail} style={{background: `url(${data.image}) center/cover no-repeat`}}></div>
-                            <div className={classes.thumbnail} style={{background: `url(${data.image}) center/cover no-repeat`}}></div>
-                            <div className={classes.thumbnail} style={{background: `url(${data.image}) center/cover no-repeat`}}></div>
+                            {images.map((img,index) => (<div className={classNames(classes.thumbnail,{[classes.thumbailActive]: img.id === imageid })} style={{background: `url(${img.image}) center/cover no-repeat`}} onClick={this.thumbnailClick(img.id)}></div>))}
+                            {allImages.length > 4 && <Pagination count={Math.ceil(allImages.length / 4)} page={thumbnailsPage} onPageChange={this.thumbnailsPageChange}/>}
+                            
                         </div>
                     </div>
                 </div>

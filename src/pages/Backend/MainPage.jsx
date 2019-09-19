@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import injectSheet from 'react-jss'
 import Header from '../../components/backend/Header';
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Projects from './Projects';
 import Users from './Users';
 import Dashboard from './Dashboard';
 import Project from './Project';
+import ProjectImage from './ProjectImage';
 
 const styles = theme => ({
     root: {
@@ -52,6 +53,8 @@ class MainPage extends Component {
                         <Route path='/backend/projects' exact component={Projects} />
                         <Route path='/backend/project' exact component={Project} />
                         <Route path='/backend/project/:id' exact component={Project} />
+                        <Route path='/backend/project/:id/image' exact component={ProjectImage} />
+                        <Route path='/backend/project/:id/image/:imageid' exact component={ProjectImage} />
                         <Route path='/backend/users' exact component={Users} />
                         <Route path='/backend' exact component={Dashboard} />
                     </div>

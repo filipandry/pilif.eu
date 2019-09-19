@@ -3,7 +3,6 @@ import injectSheet from 'react-jss'
 
 import Portfolio from 'components/portfolio/Portfolio';
 import Item from "components/info/Item";
-import Button from "components/button/Button";
 import Pagination from '../pagination/Pagination';
 
 const styles = theme => ({

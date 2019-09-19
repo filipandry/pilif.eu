@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss'
 
-import color from 'color';
-
-
 const styles = theme => ({
     item: {
         position: "relative",

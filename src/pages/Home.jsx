@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import Page from 'components/page/Page';
 import Card from 'components/card/Card';
 import Info from 'components/info/Info';
-import Register from 'components/auth/Register';
 
-import { FirebaseContext, withFirebase } from 'components/firebase';
+import { withFirebase } from 'components/firebase';
 
 import injectSheet from 'react-jss';
 import {compose} from 'recompose';
@@ -16,11 +15,10 @@ import Codepen from 'mdi-react/CodepenIcon';
 import Email from 'mdi-react/EmailOutlineIcon';
 
 import PageContainer from '../components/page/PageContainer';
-import Login from '../components/auth/Login';
 import withAuthentication from '../components/auth/session/withAuthentications';
-import PortfolioEdit from '../components/portfolio/PortfolioEdit';
 import Card1 from '../components/profile/card1/Card1';
-import SignOut from '../components/auth/SignOut';
+
+import { compareDesc } from 'utils';
 
 const styles = theme => ({
   "@global": {
@@ -43,24 +41,7 @@ const styles = theme => ({
     height: "100%",
   }
 });
-const compare = (item1,item2) =>{
-  if(item1.id < item2.id){
-    return -1;
-  }
-  if(item1.id > item2.id){
-    return 1;
-  }
-  return 0;
-}
-const compareDesc = (item2,item1) =>{
-  if(item1.id < item2.id){
-    return -1;
-  }
-  if(item1.id > item2.id){
-    return 1;
-  }
-  return 0;
-}
+
 class Home extends Component {
   constructor(props){
     super(props);

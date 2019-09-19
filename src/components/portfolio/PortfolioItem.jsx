@@ -55,7 +55,6 @@ class PortfolioItem extends Component {
     }
     onMoreClick = () =>{
         var bounds = this.button.current.getBounds();
-        console.log(bounds);
         this.setState({pos: bounds});
     }
     onDetailsClose = () =>{
@@ -73,10 +72,11 @@ class PortfolioItem extends Component {
             heightEnd: window.innerHeight * 90 / 100,
         };
         var { ...exp } = style;
+        var image = item.images && item.images.length > 1 && item.images[1].image;
         return (
             <div className={classes.root}>
                 <div className={classes.inner}>
-                    <img src={item.image} className={classes.image} alt={item.title}/>
+                    <img src={image} className={classes.image} alt={item.title}/>
                     <div className={classes.content}>
                         <span className={classes.title}>{item.title}</span>
                         <p>{item.text}</p>

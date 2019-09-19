@@ -11,8 +11,6 @@ import PageNotFound from 'pages/PageNotFound';
 class App extends Component {
 
   render() {
-    var { user } = this.props;
-    
     return (
       <Router>
         <Switch>
