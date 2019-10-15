@@ -3,7 +3,6 @@ import injectSheet from 'react-jss'
 
 import Portfolio from 'components/portfolio/Portfolio';
 import Item from "components/info/Item";
-import Pagination from '../pagination/Pagination';
 
 const styles = theme => ({
     root: {
@@ -56,25 +55,18 @@ class Info extends Component {
         super(props);
         this.Container = React.createRef();
         this.state={
-            page: 1
+            pos: 0,
         }
-    }
-    onPageChange = (newPage, oldPage) =>{
-        this.setState({page: newPage});
     }
     render() {
         var {classes,item, color, color2} = this.props;
-        var {page} = this.state;
-        
+        var items = item.items;
         return (
             <div className={classes.root} ref={this.Container}>
                 <div className={classes.back} />
                 <Item data={item} color={color} color2={color2} />
                 <div className={classes.current}>
-                    <span className={classes.beforeContent}></span>
-                    <Portfolio items={item.items.slice((page-1) * 4,(page-1) * 4 + 4)} />
-                    <span className={classes.afterContent}></span>
-                    {item.items.length > 4 && <Pagination count={Math.ceil(item.items.length / 4)} page={page} onPageChange={this.onPageChange} />}
+                    <Portfolio items={items} />
                 </div>
             </div>
         );

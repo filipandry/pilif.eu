@@ -7,7 +7,7 @@ const styles = theme => ({
     root: {
         display: "inline-block",
         verticalAlign: "top",
-        width: "25%",
+        width: "20vw",
         padding: "10px",
     },
     inner: {
