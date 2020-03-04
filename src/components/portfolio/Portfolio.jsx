@@ -5,10 +5,10 @@ import PortfolioItem from 'components/portfolio/PortfolioItem';
 const styles = theme => ({
     root: {
         textAlign: 'center',
-        width: props => `calc(20vw * ${props.items.length})`,
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
+        // width: props => `calc(20vw * ${props.items.length})`,
+        // position: 'absolute',
+        // left: '50%',
+        // top: '50%',
         // transition: 'transform 0.1s ease',
     },
 });
@@ -41,10 +41,10 @@ class Portfolio extends Component {
             });
         }
         var style={
-            transform: `translate(calc(-50% - ${pos}%), -50%)`,
+            //transform: `translate(calc(-50% - ${pos}%), -50%)`,
         };
         return (
-            <div className={classes.root} style={style} onMouseMove={this.mouseMove}>
+            <div className={classes.root} style={style}>
                 {content}
             </div>
         );

@@ -17,6 +17,7 @@ import Email from 'mdi-react/EmailOutlineIcon';
 import PageContainer from '../components/page/PageContainer';
 import withAuthentication from '../components/auth/session/withAuthentications';
 import Card1 from '../components/profile/card1/Card1';
+import Feed from '../components/feed/Feed';
 
 import { compareDesc } from 'utils';
 
@@ -51,6 +52,7 @@ class Home extends Component {
       websites:[],
       designs:[],
       other:[],
+      items:[],
     }
   }
 
@@ -60,25 +62,26 @@ class Home extends Component {
     firebase.db.ref('/portfolio').on('value',snapshot =>{
       var items = Array.from(snapshot.val()).sort(compareDesc);
       console.log(items);
-      firebase.db.ref('/groups').on('value', groupSnap =>{
-        var groups = Array.from(groupSnap.val()).filter(i => i!== undefined);
-        console.log(groups);
-        this.setState(state =>{
-          groups = groups.map(item =>{
-            item.items = items.filter(i => i !== undefined && i.group===item.id);
-            return item;
-          });
-          state.groups = groups;
-          return state;
-        });
-      });
+      this.setState({items});
+      // firebase.db.ref('/groups').on('value', groupSnap =>{
+      //   var groups = Array.from(groupSnap.val()).filter(i => i!== undefined);
+      //   console.log(groups);
+      //   this.setState(state =>{
+      //     groups = groups.map(item =>{
+      //       item.items = items.filter(i => i !== undefined && i.group===item.id);
+      //       return item;
+      //     });
+      //     state.groups = groups;
+      //     return state;
+      //   });
+      // });
       
     });
   }
 
   render() {
     var {theme,classes } = this.props;
-    var { groups} = this.state;
+    var { groups, items } = this.state;
 
     var cardInfos= {
       name: 'Filip Andrei Muresan',
@@ -118,8 +121,8 @@ class Home extends Component {
             <Page color={theme.colorSecondaryLighter}>
               <Card {...cardInfos}/>
             </Page>
+            {items.filter(i => i !== undefined).map((item, index) =><Page key={index} color={index % 2 !== 1 ? theme.colorPrimary : theme.colorSecondaryLighter}><Feed key={index} item={item} /></Page>)}
             {groupsToShow.map((item,index) => {
-              console.log(item);
               return (
                 <Page key={index} color={index % 2 !== 1 ? theme.colorPrimary : theme.colorSecondaryLighter}>
                   <Info item={item} color={index % 2 !== 0 ? theme.colorPrimary : theme.colorSecondaryLighter} color2={index % 2 !== 1 ? theme.colorPrimary : theme.colorSecondaryLighter}/>

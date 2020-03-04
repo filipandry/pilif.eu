@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import injectSheet from 'react-jss'
-import Button from '../button/Button';
 import ExpandingPanel from '../expandingPanel/ExpandingPanel';
 
 const styles = theme => ({
@@ -11,13 +10,11 @@ const styles = theme => ({
         padding: "10px",
     },
     inner: {
-        // border: "1px solid",
-        //borderRadius: "10px",
-        // padding: "10px",
+        cursor: "pointer",
         background: theme.colorPrimaryLighter,
         color: theme.colorSecondary,
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.6)',
-        fontSize: 12,
+        fontSize: 0,
     },
     title: {
         fontSize: 16,
@@ -48,13 +45,34 @@ const styles = theme => ({
 class PortfolioItem extends Component {
     constructor(props){
         super(props);
-        this.button = React.createRef();
+        this.item = React.createRef();
         this.state = {
             pos: false,
         }
     }
+
+    getCoords = (elem) => { // crossbrowser version
+        var box = elem.getBoundingClientRect();
+    
+        var body = document.body;
+        var docEl = document.documentElement;
+    
+        var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+        var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+    
+        var clientTop = docEl.clientTop || body.clientTop || 0;
+        var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+    
+        var top  = box.top +  scrollTop - clientTop;
+        var left = box.left + scrollLeft - clientLeft;
+    
+        return { top: Math.round(top), left: Math.round(left), width: box.width, height: box.height };
+    }
+    getBounds = () =>{
+        return this.getCoords(this.item.current);
+    }
     onMoreClick = () =>{
-        var bounds = this.button.current.getBounds();
+        var bounds = this.getBounds();
         this.setState({pos: bounds});
     }
     onDetailsClose = () =>{
@@ -75,13 +93,8 @@ class PortfolioItem extends Component {
         var image = item.images && item.images.length > 1 && item.images[1].image;
         return (
             <div className={classes.root}>
-                <div className={classes.inner}>
-                    <img src={image} className={classes.image} alt={item.title}/>
-                    <div className={classes.content}>
-                        <span className={classes.title}>{item.title}</span>
-                        <p>{item.text}</p>
-                        <Button innerRef={this.button} label="More..." fullWidth onClick={this.onMoreClick} marginTop={40}/>
-                    </div>
+                <div ref={this.item} className={classes.inner}  onClick={this.onMoreClick}>
+                    <img src={image} className={classes.image} alt={item.title} />
                 </div>
                 {pos && <ExpandingPanel {...exp} onClose={this.onDetailsClose} data={item}/>}
             </div>

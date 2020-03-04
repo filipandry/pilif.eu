@@ -24,7 +24,7 @@ const styles = theme => ({
         }
     },
     sidebar: {
-        width: '300px',
+        width: '200px',
         background: theme.colorSecondary,
         '&> a':{
             display: 'block',
@@ -33,7 +33,7 @@ const styles = theme => ({
         }
     },
     content: {
-        width: 'calc(100vw - 300px)',
+        width: 'calc(100vw - 200px)',
     }
 });
 
