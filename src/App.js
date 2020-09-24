@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { compose } from "recompose";
 import withAuthentication from "./components/auth/session/withAuthentications";
-import { withFirebase } from "components/firebase";
+import { withFirebase } from "./components/firebase";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "pages/Home";
