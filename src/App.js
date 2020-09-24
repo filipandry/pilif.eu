@@ -4,9 +4,9 @@ import withAuthentication from "./components/auth/session/withAuthentications";
 import { withFirebase } from "./components/firebase";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "pages/Home";
-import Backend from "pages/Backend";
-import PageNotFound from "pages/PageNotFound";
+import Home from "./pages/Home";
+import Backend from "./pages/Backend";
+import PageNotFound from "./pages/PageNotFound";
 
 class App extends Component {
   render() {
