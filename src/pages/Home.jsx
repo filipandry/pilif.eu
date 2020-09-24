@@ -113,7 +113,7 @@ class Home extends Component {
     return (
       <div className={classes.root}>
         <PageContainer>
-          <Page color={theme.colorSecondaryLighter}>
+          <Page color={theme && theme.colorSecondaryLighter}>
             <Card {...cardInfos} />
           </Page>
           {groupsToShow.map((item, index) => {
@@ -142,7 +142,10 @@ class Home extends Component {
               </Page>
             );
           })}
-          <Page color={theme.colorSecondaryLighter} style={{ display: "flex" }}>
+          <Page
+            color={theme && theme.colorSecondaryLighter}
+            style={{ display: "flex" }}
+          >
             <Card1 {...cardInfos} />
           </Page>
         </PageContainer>

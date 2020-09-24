@@ -72,7 +72,7 @@ class Header extends Component {
                             ? 
                             <ContactIconDown className={classes.contactIcon} color={theme.colorPrimaryLighter} size={40} /> 
                             :
-                            <ContactIconUp className={classes.contactIcon} color={theme.colorPrimaryLighter} size={40} />
+                            <ContactIconUp className={classes.contactIcon} color={theme && theme.colorPrimaryLighter} size={40} />
                         }
                     </div>
                 </div>
