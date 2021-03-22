@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Page from "components/page/Page";
-import Card from "components/card/Card";
-import Info from "components/info/Info";
+import Page from "../components/page/Page";
+import Card from "../components/card/Card";
+import Info from "../components/info/Info";
 
-import { withFirebase } from "components/firebase";
+import { withFirebase } from "../components/firebase";
 
 import injectSheet from "react-jss";
 import { compose } from "recompose";
@@ -17,7 +17,7 @@ import PageContainer from "../components/page/PageContainer";
 import withAuthentication from "../components/auth/session/withAuthentications";
 import Card1 from "../components/profile/card1/Card1";
 
-import { compareDesc } from "utils";
+import { compareDesc } from "../utils";
 
 const styles = (theme) => ({
   "@global": {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PageIndicator from "components/page/PageIndicator";
+import PageIndicator from "./PageIndicator";
 
 export default class PageContainer extends Component {
   state = {

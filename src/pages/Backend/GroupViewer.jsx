@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { compose } from "recompose";
 import injectSheet from "react-jss";
-import withAuthentication from "components/auth/session/withAuthentications";
-import { withFirebase } from "components/firebase";
+import withAuthentication from "../../components/auth/session/withAuthentications";
+import { withFirebase } from "../../components/firebase";
 
 const styles = (theme) => ({});
 

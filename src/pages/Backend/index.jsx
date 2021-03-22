@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import { compose } from "recompose";
-import withAuthentication from "components/auth/session/withAuthentications";
-import { withFirebase } from "components/firebase";
+import withAuthentication from "../../components/auth/session/withAuthentications";
+import { withFirebase } from "../../components/firebase";
 
 import injectSheet from "react-jss";
-import { Login } from "components/auth";
+import { Login } from "../../components/auth";
 import MainPage from "./MainPage";
 
 const styles = (theme) => ({});
